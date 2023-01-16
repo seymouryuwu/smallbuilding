@@ -1,6 +1,7 @@
 package com.smallbuilding.smallbuilding;
 
 import com.smallbuilding.smallbuilding.model.*;
+import com.smallbuilding.smallbuilding.service.BuildingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SmallbuildingApplicationTests {
 	@Autowired
-	Building building;
+	private Building building;
+
+	@Autowired
+	private BuildingService buildingService;
 
 	@Test
 	void contextLoads() {
@@ -94,4 +98,15 @@ class SmallbuildingApplicationTests {
 		}
 	}
 
+	/**
+	 * Test if setting building requested temperature works.
+	 */
+	@Test
+	void testSettingRequestedTemperature() {
+		System.out.println(buildingService.getRequestedTemperature());
+		buildingService.setRequestedTemperature(100.0);
+		System.out.println(buildingService.getRequestedTemperature());
+		assertEquals(100, buildingService.getRequestedTemperature(),
+				"Getting building requested temperature failed.");
+	}
 }
