@@ -109,4 +109,27 @@ class SmallbuildingApplicationTests {
 		assertEquals(100, buildingService.getRequestedTemperature(),
 				"Getting building requested temperature failed.");
 	}
+
+	/**
+	 * Test if adding and removing rooms for application building works.
+	 */
+	@Test
+	void testAddingAndRemovingRoomsForApplicationBuilding() {
+		Apartment newApartment = new Apartment();
+		newApartment.setId(103);
+
+		buildingService.addRoom(newApartment);
+		assertTrue(building.getRooms().get(103) instanceof Apartment, "Adding new apartment failed.");
+
+		CommonRoom newCommonRoom = new CommonRoom();
+		newCommonRoom.setId(3);
+
+		buildingService.addRoom(newCommonRoom);
+		assertTrue(building.getRooms().get(3) instanceof CommonRoom, "Adding new common room failed.");
+
+		buildingService.removeRoom(103);
+		buildingService.removeRoom(3);
+		assertFalse(building.getRooms().containsKey(103), "Removing room failed");
+		assertFalse(building.getRooms().containsKey(3), "Removing room failed");
+	}
 }
