@@ -2,6 +2,7 @@ package com.smallbuilding.smallbuilding;
 
 import com.smallbuilding.smallbuilding.model.*;
 import com.smallbuilding.smallbuilding.service.BuildingService;
+import com.smallbuilding.smallbuilding.service.RoomService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,9 @@ class SmallbuildingApplicationTests {
 
 	@Autowired
 	private BuildingService buildingService;
+
+	@Autowired
+	private RoomService roomService;
 
 	@Test
 	void contextLoads() {
@@ -131,5 +135,46 @@ class SmallbuildingApplicationTests {
 		buildingService.removeRoom(3);
 		assertFalse(building.getRooms().containsKey(103), "Removing room failed");
 		assertFalse(building.getRooms().containsKey(3), "Removing room failed");
+	}
+
+	/**
+	 * Test if the status of all the rooms in the building can be updated correctly.
+	 */
+	@Test
+	void testUpdatingRoomsStatus() {
+		buildingService.updateRoomsStatus();
+
+		for (Map.Entry<Integer, Room> entry : building.getRooms().entrySet()) {
+			Room room = entry.getValue();
+			assertEquals(room.getTemperature() > building.getRequestedTemperature(), room.isCoolingEnabled(),
+					"Not all the room status is updated correctly. The coolingEnabled of room " + room.getId() +
+							" is incorrect.");
+
+			assertEquals(room.getTemperature() < building.getRequestedTemperature(), room.isHeatingEnabled(),
+					"Not all the room status is updated correctly. The heatingEnabled of room " + room.getId() +
+							" is incorrect.");
+		}
+	}
+
+	/**
+	 * Test if the status of a single room can be updated correctly.
+	 */
+	@Test
+	void testUpdatingRoomStatus() {
+		building.setRequestedTemperature(26.0);
+
+		Apartment room1 = new Apartment();
+		room1.setTemperature(20.0);
+
+		roomService.updateStatus(room1);
+		assertTrue(room1.isHeatingEnabled());
+		assertFalse(room1.isCoolingEnabled());
+
+		Apartment room2 = new Apartment();
+		room2.setTemperature(30.0);
+
+		roomService.updateStatus(room2);
+		assertTrue(room2.isCoolingEnabled());
+		assertFalse(room2.isHeatingEnabled());
 	}
 }
