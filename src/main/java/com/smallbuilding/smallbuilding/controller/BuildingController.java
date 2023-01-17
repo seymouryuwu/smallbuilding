@@ -1,6 +1,7 @@
 package com.smallbuilding.smallbuilding.controller;
 
 import com.smallbuilding.smallbuilding.model.Apartment;
+import com.smallbuilding.smallbuilding.model.CommonRoom;
 import com.smallbuilding.smallbuilding.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,8 @@ public class BuildingController {
 
         model.addAttribute("inputApartment", new Apartment());
 
+        model.addAttribute("inputCommonRoom", new CommonRoom());
+
         return "index";
     }
 
@@ -45,6 +48,13 @@ public class BuildingController {
     @RequestMapping(value = "/addApartment", method = RequestMethod.POST)
     public String addApartment(@ModelAttribute("inputApartment") Apartment inputApartment) {
         buildingService.addRoom(inputApartment);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/addCommonRoom", method = RequestMethod.POST)
+    public String addCommonRoom(@ModelAttribute("inputCommonRoom") CommonRoom inputCommonRoom) {
+        buildingService.addRoom(inputCommonRoom);
 
         return "redirect:/";
     }
