@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.smallbuilding.smallbuilding.model.Building;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class BuildingController {
@@ -22,6 +26,16 @@ public class BuildingController {
         model.addAttribute("apartmentList", buildingService.getApartmentList());
         model.addAttribute("commonRoomList", buildingService.getCommonRoomList());
 
+        model.addAttribute("inputBuilding", new Building());
+
         return "index";
+    }
+
+    @RequestMapping(value = "/setRequestedTemperature", method = RequestMethod.POST)
+    public String setRequestedTemperature(@ModelAttribute("inputBuilding") Building inputBuilding) {
+
+        buildingService.setRequestedTemperature(inputBuilding.getRequestedTemperature());
+
+        return "redirect:/";
     }
 }

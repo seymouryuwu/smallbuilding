@@ -45,5 +45,18 @@
     </tr>
     </tbody>
 </table>
+
+<h2>Change Building Requested Temperature</h2>
+<div>
+    <form action="#" th:action="@{/setRequestedTemperature}" th:object="${inputBuilding}" method="post">
+        <label>
+            Change building requested temperature
+            <input type="number" step="0.1" th:field="*{requestedTemperature}" />
+            <input type="submit" value="Submit" />
+        </label>
+
+    </form>
+</div>
+
 </body>
 </html>
