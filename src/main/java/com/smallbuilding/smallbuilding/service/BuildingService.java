@@ -1,12 +1,16 @@
 package com.smallbuilding.smallbuilding.service;
 
 
+import com.smallbuilding.smallbuilding.model.Apartment;
 import com.smallbuilding.smallbuilding.model.Building;
+import com.smallbuilding.smallbuilding.model.CommonRoom;
 import com.smallbuilding.smallbuilding.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -76,5 +80,41 @@ public class BuildingService {
             Room room = entry.getValue();
             roomService.updateStatus(room);
         }
+    }
+
+    public List<Room> getRoomList() {
+        List<Room> roomList = new ArrayList<>();
+        for (Map.Entry<Integer, Room> entry : applicationBuilding.getRooms().entrySet()) {
+            Room room = entry.getValue();
+            roomList.add(room);
+        }
+
+        return roomList;
+    }
+
+    public List<Apartment> getApartmentList() {
+        List<Apartment> apartmentList = new ArrayList<>();
+        for (Map.Entry<Integer, Room> entry : applicationBuilding.getRooms().entrySet()) {
+            Room room = entry.getValue();
+
+            if (room instanceof Apartment) {
+                apartmentList.add((Apartment) room);
+            }
+        }
+
+        return apartmentList;
+    }
+
+    public List<CommonRoom> getCommonRoomList() {
+        List<CommonRoom> commonRoomList = new ArrayList<>();
+        for (Map.Entry<Integer, Room> entry : applicationBuilding.getRooms().entrySet()) {
+            Room room = entry.getValue();
+
+            if (room instanceof CommonRoom) {
+                commonRoomList.add((CommonRoom) room);
+            }
+        }
+
+        return commonRoomList;
     }
 }

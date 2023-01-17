@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Small Building</title>
+</head>
+<body>
+<h1>Small Building Program</h1>
+
+<h2>Building Requested Temperature</h2>
+<div><span>Building Requested Temperature: </span><span th:text="${buildingRequestedTemperature}"></span></div>
+
+<h2>Room List</h2>
+<table>
+    <tbody>
+    <tr><th>Apartment</th></tr>
+    <tr>
+        <td>Id</td>
+        <td>Temperature</td>
+        <td>Heating Enabled</td>
+        <td>Cooling Enabled</td>
+        <td>Owner Name</td>
+    </tr>
+    <tr th:each="apartment: ${apartmentList}">
+        <td th:text="${apartment.getId()}"></td>
+        <td th:text="${apartment.getTemperature()}"></td>
+        <td th:text="${apartment.isHeatingEnabled()}"></td>
+        <td th:text="${apartment.isCoolingEnabled()}"></td>
+        <td th:text="${apartment.getOwnerName()}"></td>
+    </tr>
+    <tr><th>Common Room</th></tr>
+    <tr>
+        <td>Id</td>
+        <td>Temperature</td>
+        <td>Heating Enabled</td>
+        <td>Cooling Enabled</td>
+        <td>Type</td>
+    </tr>
+    <tr th:each="commonRoom: ${commonRoomList}">
+        <td th:text="${commonRoom.getId()}"></td>
+        <td th:text="${commonRoom.getTemperature()}"></td>
+        <td th:text="${commonRoom.isHeatingEnabled()}"></td>
+        <td th:text="${commonRoom.isCoolingEnabled()}"></td>
+        <td th:text="${commonRoom.getCommonRoomType().name()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Change Building Requested Temperature</h2>
+<div>
+    <form action="#" th:action="@{/setRequestedTemperature}" th:object="${inputBuilding}" method="post">
+        <label>
+            Change building requested temperature
+            <input type="number" step="0.1" th:field="*{requestedTemperature}" required="required" />
+            <input type="submit" value="Submit" />
+        </label>
+
+    </form>
+</div>
+
+<h2>Add Apartment</h2>
+<div>
+    <form action="#" th:action="@{/addApartment}" th:object="${inputApartment}" method="post">
+        <label>
+            Apartment Id
+            <input type="number" th:field="*{id}" required="required" min="0" />
+        </label>
+        <label>
+            Temperature
+            <input type="number" step="0.1" th:field="*{temperature}" required="required" />
+        </label>
+        <label>
+            Owner Name
+            <input type="text" th:field="*{ownerName}" />
+        </label>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+<h2>Add Common Room</h2>
+<div>
+    <form action="#" th:action="@{/addCommonRoom}" th:object="${inputCommonRoom}" method="post">
+        <label>
+            Common Room Id
+            <input type="number" th:field="*{id}" required="required" min="0" />
+        </label>
+        <label>
+            Temperature
+            <input type="number" step="0.1" th:field="*{temperature}" required="required" />
+        </label>
+        <label>
+            Type
+            <select th:field="*{commonRoomType}">
+                <option th:each="type: ${T(com.smallbuilding.smallbuilding.model.CommonRoomType).values()}"
+                        th:value="${type}"
+                        th:text="${type}"></option>
+            </select>
+        </label>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+</body>
+</html>
