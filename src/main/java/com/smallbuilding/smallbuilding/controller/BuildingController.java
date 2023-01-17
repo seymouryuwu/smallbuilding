@@ -1,5 +1,6 @@
 package com.smallbuilding.smallbuilding.controller;
 
+import com.smallbuilding.smallbuilding.model.Apartment;
 import com.smallbuilding.smallbuilding.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class BuildingController {
 
         model.addAttribute("inputBuilding", new Building());
 
+        model.addAttribute("inputApartment", new Apartment());
+
         return "index";
     }
 
@@ -35,6 +38,13 @@ public class BuildingController {
     public String setRequestedTemperature(@ModelAttribute("inputBuilding") Building inputBuilding) {
 
         buildingService.setRequestedTemperature(inputBuilding.getRequestedTemperature());
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/addApartment", method = RequestMethod.POST)
+    public String addApartment(@ModelAttribute("inputApartment") Apartment inputApartment) {
+        buildingService.addRoom(inputApartment);
 
         return "redirect:/";
     }

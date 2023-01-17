@@ -58,5 +58,24 @@
     </form>
 </div>
 
+<h2>Add Apartment</h2>
+<div>
+    <form action="#" th:action="@{/addApartment}" th:object="${inputApartment}" method="post">
+        <label>
+            Apartment Id
+            <input type="number" th:field="*{id}" />
+        </label>
+        <label>
+            Temperature
+            <input type="number" step="0.1" th:field="*{temperature}" />
+        </label>
+        <label>
+            Owner Name
+            <input type="text" th:field="*{ownerName}" />
+        </label>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
 </body>
 </html>
