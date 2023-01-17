@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BuildingService {
@@ -29,6 +27,8 @@ public class BuildingService {
     public void setRoomService(RoomService roomService) {
         this.roomService = roomService;
     }
+
+    private Timer timer = new Timer("recalculateRoomStatus");
 
     /**
      * Set building requested Temperature.
@@ -116,5 +116,37 @@ public class BuildingService {
         }
 
         return commonRoomList;
+    }
+
+    /**
+     * Enable recalculation of room status on a timer. This will only take effect when the application building has a
+     * period greater than 0. Otherwise, it will cancel the timer.
+     */
+    public void enableRecalculateRoomStatusOnTimer() {
+        timer.cancel();
+
+        if (applicationBuilding.getRecalculateRoomStatusPeriod() <=  0) {
+            return;
+        }
+
+        timer = new Timer("recalculateRoomStatus");
+        TimerTask recalculationTask = new TimerTask() {
+            @Override
+            public void run() {
+                updateRoomsStatus();
+            }
+        };
+
+        timer.scheduleAtFixedRate(recalculationTask, 0, applicationBuilding.getRecalculateRoomStatusPeriod() * 1000L);
+    }
+
+    /**
+     * Set recalculate room status period for the application building, then enable it on a timer or cancel the timer
+     * when the period is not greater than 0.
+     * @param recalculateRoomStatusPeriod The period to be set.
+     */
+    public void setApplicationBuildingRecalculateRoomStatusPeriod(int recalculateRoomStatusPeriod) {
+        applicationBuilding.setRecalculateRoomStatusPeriod(recalculateRoomStatusPeriod);
+        enableRecalculateRoomStatusOnTimer();
     }
 }

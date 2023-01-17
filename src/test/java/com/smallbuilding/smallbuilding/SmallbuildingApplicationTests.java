@@ -177,4 +177,16 @@ class SmallbuildingApplicationTests {
 		assertTrue(room2.isCoolingEnabled());
 		assertFalse(room2.isHeatingEnabled());
 	}
+
+	/**
+	 * Test if it can successfully create or cancel the timer.
+	 */
+	@Test
+	void testSettingApplicationBuildingRecalculateRoomStatusPeriod() {
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(0);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(0);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(1);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(2);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(0);
+	}
 }

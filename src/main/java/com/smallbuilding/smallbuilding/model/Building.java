@@ -10,10 +10,13 @@ import java.util.Map;
 public class Building {
     private double requestedTemperature;
 
+    private int recalculateRoomStatusPeriod;
+
     private Map<Integer, Room> rooms;
 
     public Building() {
         this.requestedTemperature = 20.0;
+        this.recalculateRoomStatusPeriod = 0; // 0 means recalculation is disabled.
         rooms = new HashMap<>();
     }
 
@@ -61,5 +64,13 @@ public class Building {
 
     public void setRooms(Map<Integer, Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public int getRecalculateRoomStatusPeriod() {
+        return recalculateRoomStatusPeriod;
+    }
+
+    public void setRecalculateRoomStatusPeriod(int recalculateRoomStatusPeriod) {
+        this.recalculateRoomStatusPeriod = recalculateRoomStatusPeriod;
     }
 }
