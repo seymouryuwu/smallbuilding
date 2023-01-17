@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Small Building</title>
+</head>
+<body>
+<h1>Small Building Program</h1>
+
+<h2>Building Requested Temperature</h2>
+<div><span>Building Requested Temperature: </span><span th:text="${buildingRequestedTemperature}"></span></div>
+
+<h2>Room List</h2>
+<table>
+    <tbody>
+    <tr><th>Apartment</th></tr>
+    <tr>
+        <td>Id</td>
+        <td>Temperature</td>
+        <td>Heating Enabled</td>
+        <td>Cooling Enabled</td>
+        <td>Owner Name</td>
+    </tr>
+    <tr th:each="apartment: ${apartmentList}">
+        <td th:text="${apartment.getId()}"></td>
+        <td th:text="${apartment.getTemperature()}"></td>
+        <td th:text="${apartment.isHeatingEnabled()}"></td>
+        <td th:text="${apartment.isCoolingEnabled()}"></td>
+        <td th:text="${apartment.getOwnerName()}"></td>
+    </tr>
+    <tr><th>Common Room</th></tr>
+    <tr>
+        <td>Id</td>
+        <td>Temperature</td>
+        <td>Heating Enabled</td>
+        <td>Cooling Enabled</td>
+        <td>Type</td>
+    </tr>
+    <tr th:each="commonRoom: ${commonRoomList}">
+        <td th:text="${commonRoom.getId()}"></td>
+        <td th:text="${commonRoom.getTemperature()}"></td>
+        <td th:text="${commonRoom.isHeatingEnabled()}"></td>
+        <td th:text="${commonRoom.isCoolingEnabled()}"></td>
+        <td th:text="${commonRoom.getCommonRoomType().name()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
