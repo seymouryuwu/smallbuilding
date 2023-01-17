@@ -212,4 +212,43 @@ class SmallbuildingApplicationTests {
 			previousTemperature = room.getTemperature();
 		}
 	}
+
+	/**
+	 * Test if close enough limit will take effect when update room status.
+	 */
+	@Test
+	void testCloseEnoughLimitForRoom() {
+		building.setRequestedTemperature(26.0);
+
+		Apartment apartment = new Apartment();
+		apartment.setCloseEnoughLimit(2.0);
+
+		apartment.setTemperature(23.8);
+		apartment.setHeatingEnabled(false);
+		apartment.setCoolingEnabled(false);
+		roomService.updateStatus(apartment);
+		assertTrue(apartment.isHeatingEnabled());
+		assertFalse(apartment.isCoolingEnabled());
+
+		apartment.setTemperature(24.3);
+		apartment.setHeatingEnabled(false);
+		apartment.setCoolingEnabled(false);
+		roomService.updateStatus(apartment);
+		assertFalse(apartment.isHeatingEnabled());
+		assertFalse(apartment.isCoolingEnabled());
+
+		apartment.setTemperature(28.2);
+		apartment.setHeatingEnabled(false);
+		apartment.setCoolingEnabled(false);
+		roomService.updateStatus(apartment);
+		assertFalse(apartment.isHeatingEnabled());
+		assertTrue(apartment.isCoolingEnabled());
+
+		apartment.setTemperature(27.8);
+		apartment.setHeatingEnabled(false);
+		apartment.setCoolingEnabled(false);
+		roomService.updateStatus(apartment);
+		assertFalse(apartment.isHeatingEnabled());
+		assertFalse(apartment.isCoolingEnabled());
+	}
 }

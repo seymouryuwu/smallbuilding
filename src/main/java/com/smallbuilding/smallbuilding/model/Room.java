@@ -15,15 +15,17 @@ public abstract class Room {
     private boolean heatingEnabled;
     private boolean coolingEnabled;
 
+    private double closeEnoughLimit;
+
     private static final DecimalFormat df = new DecimalFormat("0.0");
 
     public Room() {
         Random rand = new Random();
         double temperatureMin = 10.0;
         double temperatureMax = 40.0;
-
         this.temperature = Double.parseDouble(df.format(temperatureMin + rand.nextDouble() * (temperatureMax - temperatureMin)));
 
+        this.closeEnoughLimit = 0.0;
 
         // Let room temperature changes slowly based on status.
         Timer timer = new Timer();
@@ -73,5 +75,13 @@ public abstract class Room {
 
     public void setCoolingEnabled(boolean coolingEnabled) {
         this.coolingEnabled = coolingEnabled;
+    }
+
+    public double getCloseEnoughLimit() {
+        return closeEnoughLimit;
+    }
+
+    public void setCloseEnoughLimit(double closeEnoughLimit) {
+        this.closeEnoughLimit = closeEnoughLimit;
     }
 }
