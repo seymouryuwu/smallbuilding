@@ -17,6 +17,7 @@
     <tr>
         <td>Id</td>
         <td>Temperature</td>
+        <td>Close Enough Limit</td>
         <td>Heating Enabled</td>
         <td>Cooling Enabled</td>
         <td>Owner Name</td>
@@ -24,6 +25,7 @@
     <tr th:each="apartment: ${apartmentList}">
         <td th:text="${apartment.getId()}"></td>
         <td th:text="${apartment.getTemperature()}"></td>
+        <td th:text="${apartment.getCloseEnoughLimit()}"></td>
         <td th:text="${apartment.isHeatingEnabled()}"></td>
         <td th:text="${apartment.isCoolingEnabled()}"></td>
         <td th:text="${apartment.getOwnerName()}"></td>
@@ -32,6 +34,7 @@
     <tr>
         <td>Id</td>
         <td>Temperature</td>
+        <td>Close Enough Limit</td>
         <td>Heating Enabled</td>
         <td>Cooling Enabled</td>
         <td>Type</td>
@@ -39,6 +42,7 @@
     <tr th:each="commonRoom: ${commonRoomList}">
         <td th:text="${commonRoom.getId()}"></td>
         <td th:text="${commonRoom.getTemperature()}"></td>
+        <td th:text="${commonRoom.getCloseEnoughLimit()}"></td>
         <td th:text="${commonRoom.isHeatingEnabled()}"></td>
         <td th:text="${commonRoom.isCoolingEnabled()}"></td>
         <td th:text="${commonRoom.getCommonRoomType().name()}"></td>
@@ -82,6 +86,10 @@
             <input type="number" step="0.1" th:field="*{temperature}" required="required" />
         </label>
         <label>
+            Close Enough Limit
+            <input type="number" step="0.1" th:field="*{closeEnoughLimit}" required="required" />
+        </label>
+        <label>
             Owner Name
             <input type="text" th:field="*{ownerName}" />
         </label>
@@ -99,6 +107,10 @@
         <label>
             Temperature
             <input type="number" step="0.1" th:field="*{temperature}" required="required" />
+        </label>
+        <label>
+            Close Enough Limit
+            <input type="number" step="0.1" th:field="*{closeEnoughLimit}" required="required" />
         </label>
         <label>
             Type

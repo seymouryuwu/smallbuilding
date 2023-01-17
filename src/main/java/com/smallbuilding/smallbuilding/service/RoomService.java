@@ -21,7 +21,7 @@ public class RoomService {
      * @param room The room to be updated.
      */
     public void updateStatus(Room room) {
-        room.setHeatingEnabled(room.getTemperature() < applicationBuilding.getRequestedTemperature());
-        room.setCoolingEnabled(room.getTemperature() > applicationBuilding.getRequestedTemperature());
+        room.setHeatingEnabled(room.getTemperature() < applicationBuilding.getRequestedTemperature() - room.getCloseEnoughLimit());
+        room.setCoolingEnabled(room.getTemperature() > applicationBuilding.getRequestedTemperature() + room.getCloseEnoughLimit());
     }
 }
