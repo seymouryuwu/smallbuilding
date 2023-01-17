@@ -58,6 +58,18 @@
     </form>
 </div>
 
+<h2>Set Recalculate Room Status Period</h2>
+<div><span>Current value: </span><span th:text="${buildingRecalculateRoomStatusPeriod}"></span></div>
+<div>
+    <form action="#" th:action="@{/setRecalculationPeriod}" th:object="${inputBuilding}" method="post">
+        <label>
+            Set recalculate room status period in second unit (0 for disable)
+            <input type="number" th:field="*{recalculateRoomStatusPeriod}" required="required" />
+            <input type="submit" value="Submit" />
+        </label>
+    </form>
+</div>
+
 <h2>Add Apartment</h2>
 <div>
     <form action="#" th:action="@{/addApartment}" th:object="${inputApartment}" method="post">

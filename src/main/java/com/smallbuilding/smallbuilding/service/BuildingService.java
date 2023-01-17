@@ -149,4 +149,8 @@ public class BuildingService {
         applicationBuilding.setRecalculateRoomStatusPeriod(recalculateRoomStatusPeriod);
         enableRecalculateRoomStatusOnTimer();
     }
+
+    public int getRecalculateRoomStatusPeriod() {
+        return applicationBuilding.getRecalculateRoomStatusPeriod();
+    }
 }
