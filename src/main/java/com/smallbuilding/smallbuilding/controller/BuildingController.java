@@ -24,9 +24,11 @@ public class BuildingController {
     @GetMapping
     public String getIndex(Model model) {
         model.addAttribute("buildingRequestedTemperature", buildingService.getRequestedTemperature());
+        model.addAttribute("buildingRecalculateRoomStatusPeriod", buildingService.getRecalculateRoomStatusPeriod());
 
         model.addAttribute("apartmentList", buildingService.getApartmentList());
         model.addAttribute("commonRoomList", buildingService.getCommonRoomList());
+
 
         model.addAttribute("inputBuilding", new Building());
 
@@ -55,6 +57,13 @@ public class BuildingController {
     @RequestMapping(value = "/addCommonRoom", method = RequestMethod.POST)
     public String addCommonRoom(@ModelAttribute("inputCommonRoom") CommonRoom inputCommonRoom) {
         buildingService.addRoom(inputCommonRoom);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/setRecalculationPeriod", method = RequestMethod.POST)
+    public String setRecalculationPeriod(@ModelAttribute("inputBuilding") Building inputBuilding) {
+        buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(inputBuilding.getRecalculateRoomStatusPeriod());
 
         return "redirect:/";
     }

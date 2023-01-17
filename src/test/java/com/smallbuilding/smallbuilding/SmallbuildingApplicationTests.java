@@ -177,4 +177,39 @@ class SmallbuildingApplicationTests {
 		assertTrue(room2.isCoolingEnabled());
 		assertFalse(room2.isHeatingEnabled());
 	}
+
+	/**
+	 * Test if it can successfully create or cancel the timer.
+	 */
+	@Test
+	void testSettingApplicationBuildingRecalculateRoomStatusPeriod() {
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(0);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(0);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(1);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(2);
+		buildingService.setApplicationBuildingRecalculateRoomStatusPeriod(0);
+	}
+
+	/**
+	 * Test if room temperature will change base on its status.
+	 * @throws InterruptedException
+	 */
+	@Test
+	void testRoomTemperatureChange() throws InterruptedException {
+		Room room = building.getRooms().get(101);
+		System.out.println("room heating enabled:" + room.isHeatingEnabled());
+		System.out.println("room cooling enabled:" + room.isCoolingEnabled());
+		double previousTemperature = room.getTemperature();
+		for (int i = 0; i < 10; i++) {
+			System.out.println(room.getTemperature());
+			Thread.sleep(1500);
+
+			if (room.isHeatingEnabled()) {
+				assertTrue(room.getTemperature() > previousTemperature);
+			} else if (room.isCoolingEnabled()) {
+				assertTrue(room.getTemperature() < previousTemperature);
+			}
+			previousTemperature = room.getTemperature();
+		}
+	}
 }
